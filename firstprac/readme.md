@@ -58,6 +58,10 @@ gcc -fopenmp sort_lab.c -o sort_app
 ```bash
 ./sort_app -t merge
 ```
+**HeapSort**
+```bash
+./sort_app -t heap
+```
 ---
 
 ## Архітектура та Принцип роботи
@@ -88,5 +92,6 @@ gcc -fopenmp sort_lab.c -o sort_app
 `taskwait` гарантує, що злиття частин (`merge`) почнеться тільки коли обидва підпотоки завершать сортування
 4.  **Результат**
 Відсортований масив виводиться в `stdout`
+
 
 
