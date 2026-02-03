@@ -10,7 +10,7 @@ typedef struct {
 } Item;
 
 // Компаратор: спочатку за value (зростання), потім за count (спадання)
-// Використовуємо const void*, щоб qsort не сварився (warning)
+// Використовуємо const void*, щоб qsort не сварився 
 int comparator(const void* a, const void* b) {
     const Item* aitem = (const Item*)a;
     const Item* bitem = (const Item*)b;
@@ -27,18 +27,11 @@ void merge(Item arr[], int l, int m, int r) {
     int n1 = m - l + 1;
     int n2 = r - m;
 
-    // Створюємо тимчасові масиви типу Item
-    Item Le[n1], Ri[n2]; 
-
-    for (i = 0; i < n1; i++) Le[i] = arr[l + i];
-    for (j = 0; j < n2; j++) Ri[j] = arr[m + 1 + j];
-
     i = 0; 
     j = 0; 
     k = l;
     
     while (i < n1 && j < n2) {
-        // Передаємо адреси елементів у компаратор
         if (comparator(&Le[i], &Ri[j]) <= 0) {
             arr[k] = Le[i];
             i++;
@@ -82,7 +75,7 @@ void mergeSort(Item arr[], int l, int r) {
 }
 
 int main(int argc, char* argv[]) {
-    char* type = "qsort"; // Дефолтний метод
+    char* type = "qsort";
     
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "-t") == 0 && i + 1 < argc) {
@@ -116,4 +109,5 @@ int main(int argc, char* argv[]) {
     printf("\n");
 
     return 0;
+
 }
