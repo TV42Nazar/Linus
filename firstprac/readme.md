@@ -96,6 +96,8 @@ gcc -fopenmp sort_lab.c -o sort_app
 `taskwait` гарантує, що злиття частин (`merge`) почнеться тільки коли обидва підпотоки завершать сортування
 4.  **Результат**
 Відсортований масив виводиться в `stdout`
+<img width="440" height="93" alt="Screenshot 2026-02-04 175727" src="https://github.com/user-attachments/assets/af33a212-8e3b-4ee1-81b5-2afb6f6b5bfe" />
+
 
 
 
