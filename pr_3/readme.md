@@ -80,8 +80,13 @@ docker run -it ubuntu bash
 
 ### Поведінка з root правами
 
-1) `ulimit -Hn`
+-Можна помітити, що зараз можна збільшити hard ліміт.
 
-<img width="261" height="37" alt="image" src="https://github.com/user-attachments/assets/c322a3d6-4ec4-4bd3-aee1-049fa90e0f35" />
+<img width="417" height="180" alt="image" src="https://github.com/user-attachments/assets/eb9ab05c-3a6c-46ff-9099-4df607afc065" />
 
-2)
+Також слід зазначити, що з Soft ліміт не може бути більшим за Hard. При спробі вводу більщої к-сті ресурсів за системні також появиться помилка:
+
+<img width="587" height="82" alt="image" src="https://github.com/user-attachments/assets/5cd38af6-a947-4ed4-b2f9-a8f0470818f9" />
+
+
+
