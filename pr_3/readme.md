@@ -23,6 +23,11 @@ docker run -it ubuntu bash
 docker run -it ubuntu bash
 ```
 
+- Встановлення nano на docker
+```bash
+apt update && apt install nano build-essential -y
+```
+
 ---
 
 ### Perf
@@ -108,7 +113,15 @@ apt install linux-tools-6.8.0-94-generic linux-cloud-tools-6.8.0-94-generic -y
 
 ---
 
-# Завдання 3.1
+# Завдання 3.2
+
+---
+## Виконання
+
+Тут було запущено нескінченний цикл, який нічого не робить, тільки гріє процесор
+
+<img width="667" height="330" alt="image" src="https://github.com/user-attachments/assets/313ec37d-4d3a-42d9-b6d0-6e53ee883157" />
+
 
 
 
