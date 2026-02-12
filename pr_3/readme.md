@@ -1,4 +1,4 @@
-# Підготовка
+# Підготовка до виконання робіт
 
 ### Docker
 
@@ -114,6 +114,7 @@ apt install linux-tools-6.8.0-94-generic linux-cloud-tools-6.8.0-94-generic -y
 ---
 
 # Завдання 3.2
+У Docker-контейнері встановіть утиліту perf(1). Поекспериментуйте з досягненням процесом встановленого ліміту.
 
 ---
 ## Виконання
@@ -122,7 +123,133 @@ apt install linux-tools-6.8.0-94-generic linux-cloud-tools-6.8.0-94-generic -y
 
 <img width="667" height="330" alt="image" src="https://github.com/user-attachments/assets/313ec37d-4d3a-42d9-b6d0-6e53ee883157" />
 
+## Рeзультат
 
+- Можемо побачити на скільки швидко програма маштабувалася до та *(не в нашій персективі)* поза наданих заборон. 
+
+---
+
+# Завдання 3.3
+
+Напишіть програму, що імітує кидання шестигранного кубика. Імітуйте кидки, результати записуйте у файл, для якого попередньо встановлено обмеження на його максимальний розмір (max file size). Коректно обробіть ситуацію перевищення ліміту.
+
+---
+## Програма
+```bash
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int main() {
+    FILE *fptr = fopen("result.txt", "w");
+    if (fptr == NULL) {
+        printf("Error opening file!\n");
+        return 1;
+    }
+
+    srand(time(NULL));
+
+    int count = 0;
+    while (1) {
+        int roll = (rand() % 6) + 1;
+        
+        int result = fprintf(fptr, "Rolled: %d\n", roll);
+        
+        if (result < 0) {
+            printf("\nError writing file!\n");
+            perror("Cause"); // Виведе системну причину (File too large)
+            break;
+        }
+
+        count++;
+        // Кожні 1000 записів скидаємо буфер на диск
+        if (count % 1000 == 0) {
+            fflush(fptr);
+            printf("n: %d\n", count);
+        }
+    }
+
+    fclose(fptr);
+    return 0;
+}
+```
+
+## Виконання
+
+**Перед запуском необхідно встановити `ліміт`**
+```bash
+ulimit -f 20
+```
+
+Тут було запущено нескінченний цикл, який записує у файл все більші та більші значення
+
+<img width="304" height="55" alt="image" src="https://github.com/user-attachments/assets/813c6bcc-2dc8-46d9-9617-00b951122dbc" />
+
+# Завдання 3.4
+Напишіть програму, що імітує лотерею, вибираючи 7 різних цілих чисел у діапазоні від 1 до 49 і ще 6 з 36. Встановіть обмеження на час ЦП (max CPU time) і генеруйте результати вибору чисел (7 із 49, 6 із 36). Обробіть ситуацію, коли ліміт ресурсу вичерпано.
+
+--
+
+## Програма
+```bash
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <signal.h>
+#include <string.h>
+
+void cpu_limit_handler(int signum) {
+    const char *msg = "\n\n!!! CATCH SIGXCPU !!! Time limit exceeded.\n";
+    write(STDOUT_FILENO, msg, strlen(msg));
+    
+    _exit(0);
+}
+
+void shuffle(int *array, int n) {
+    if (n > 1) {
+        for (int i = 0; i < n - 1; i++) {
+            int j = i + rand() / (RAND_MAX / (n - i) + 1);
+            int t = array[j];
+            array[j] = array[i];
+            array[i] = t;
+        }
+    }
+}
+
+int main() {
+    signal(SIGXCPU, cpu_limit_handler);
+
+    srand(time(NULL));
+    int lotto49[49];
+    int lotto36[36];
+    long count = 0;
+
+    printf("Starting CPU heavy task...\n");
+
+    while (1) {
+        for(int i=0; i<49; i++) lotto49[i] = i+1;
+        for(int i=0; i<36; i++) lotto36[i] = i+1;
+
+        shuffle(lotto49, 49);
+        shuffle(lotto36, 36);
+
+        count++;
+        if (count % 100000 == 0) {
+            write(STDOUT_FILENO, ".", 1);
+        }
+    }
+    return 0;
+}
+```
+
+---
+
+## Рeзультат
+
+Система успішно завершила процес примусово, оскільки жорсткий ліміт часу було вичерпано. Обробник сигналу SIGXCPU не встигає відпрацювати через миттєве завершення процесу ядром.
+
+<img width="1081" height="559" alt="image" src="https://github.com/user-attachments/assets/e68489cb-d4ed-4be3-bcc2-805fb9fdb6dd" />
 
 
 
