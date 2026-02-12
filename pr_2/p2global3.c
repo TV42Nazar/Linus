@@ -1,18 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// 1. DATA (Global Initialized)
 int data_var = 10;
 
-// 2. BSS (Global Uninitialized)
 int bss_var;
 
-// Function to check stack growth direction
 void check_stack(int *parent) {
     int child;
     printf("Stack (child):  %p\n", &child);
     
-    // Compare addresses
     if (&child < parent) 
         printf("-> CONCLUSION: Stack grows DOWN (addresses decrease)\n");
     else 
@@ -36,4 +32,5 @@ int main() {
     
     free(heap);
     return 0;
+
 }
