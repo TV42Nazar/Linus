@@ -21,10 +21,29 @@ sudo apt install build-essential
 # 1. Компіляція програми налагоджувача
 gcc -o simple_db debugger.c
 
-# 2. Компіляція тестової програми, яку ми будемо досліджувати
+# 2.
+cat <<EOF > target_proc.c
+#include <stdio.h>
+#include <unistd.h>
+
+int main() {
+    printf("--- Початок роботи цільової програми ---\n");
+    
+    printf("Крок 1: Виконуємо якусь логіку...\n");
+    sleep(1);
+    
+    printf("Крок 2: Очікуємо дій від налагоджувача...\n");
+    sleep(1);
+    
+    printf("Крок 3: Завершення.\n");
+    return 0;
+}
+EOF
+
+# 3 Компіляція тестової програми, яку ми будемо досліджувати
 gcc -o target_proc target_proc.c
 
-# 3. Запуск налагоджувача
+# 4. Запуск налагоджувача
 ./simple_db ./target_proc
 ```
 
