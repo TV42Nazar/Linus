@@ -65,7 +65,7 @@ gcc -o target_proc target_proc.c
 
 ---
 
-## 4. Опис рішення та вихідний код
+## 4. Опис рішення ,вихідний код та скриншот роботи
 
 Програма працює за принципом розгалуження (`fork`). Дочірній процес активує режим трасування і запускає цільову програму. Батьківський процес очікує на сигнали та керує виконанням.
 
@@ -84,3 +84,5 @@ gcc -o target_proc target_proc.c
 2.  Записати `0xCC` (код `INT 3` для x86): `long trap = (data & ~0xFF) | 0xCC;`.
 3.  Повернути `trap` у пам'ять: `ptrace(PTRACE_POKETEXT, pid, addr, trap);`.
 4.  Коли програма дійде до цієї адреси, вона згенерує `SIGTRAP`.
+
+<img width="438" height="506" alt="image" src="https://github.com/user-attachments/assets/1ab26a25-ad03-4566-9ce8-6d9d1fb8ddee" />
