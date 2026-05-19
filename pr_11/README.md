@@ -24,6 +24,8 @@ gcc controller.c -o controller
 
 <img width="408" height="157" alt="image" src="https://github.com/user-attachments/assets/442d9fce-d121-4bd3-9941-12f194fe6f8f" />
 
+<img width="1408" height="427" alt="image" src="https://github.com/user-attachments/assets/af825482-8d1a-45a9-bf5c-1f134b3dd0e8" />
+
 ---
 
 ### Висновок
